@@ -73,11 +73,12 @@
                         } 
                   },
                   toggletoactive(day){
+                        if(day.name!=0){ 
                         this.active_now_day = day.name
                       
                         this.$store.dispatch('setNowDay', this.active_now_day)
                         
-                        console.log(this.active_now_day)
+                        console.log(this.active_now_day)}
                   },
                    
                   hoverr: function(index){
