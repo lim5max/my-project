@@ -8,6 +8,7 @@ export default new Vuex.Store({
    todos: [],
    newTodo: 0,
    days_li:[],
+   days_li:[],
    nowmonth:0,
    day:1,
    now_day: 0
@@ -29,8 +30,8 @@ export default new Vuex.Store({
       state.todos.splice(imdex,1)
     },
  
-   CLEAR_TODO(state){
-     state.newTodo = ''
+   Days_li(state, days){
+     state.days_li = days
    },
    SET_NOWW_DAY(state, day){
      state.now_day = day
@@ -65,6 +66,9 @@ export default new Vuex.Store({
       commit('gettodosfromfire', mass)
     })
     
+  },
+  Days_li({commit}, days){
+    commit("Days_li", days)
   },
    setNowDay({commit}, index_day){
     commit("SET_NOWW_DAY", index_day)
@@ -110,7 +114,13 @@ export default new Vuex.Store({
     getTodo: state =>{
       return state.todos.filter(todo => todo.day === state.now_day && todo.month === state.nowmonth);
     },
-    
+    findd: state=> (day, month)=>{
+      return state.todos.find(
+        todo =>{
+           return todo.day === day && todo.month === month
+        }
+      )
+    }
   }
  
 })
