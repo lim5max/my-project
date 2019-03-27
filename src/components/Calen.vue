@@ -179,9 +179,8 @@
                                       break;
                                }
                          }
-                        if(this.$store.getters.getTodo.length!=0) {
-
-                        }
+                        console.log(this.$store.getters.find(1,0) )  
+ 
                         console.log(this.days_li)
                         this.$store.dispatch('setNowM', this.now_month_index)
                         })
