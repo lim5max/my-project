@@ -25,7 +25,7 @@
     add todo</button>
     <div class="todos">
 
-        <div class="todo" v-for="(todo, index) in todos" :id="todo.id">
+        <div class="todo" v-for="(todo, index) in todos" :key="todo.id" :id="todo.id">
       <div>  plans:  {{todo.title}}   В - {{todo.date.getHours()}} часов :и :  {{todo.date.getMinutes()}} минут</div>
                 <div class="deletebutton" @click="deletetodo(todo)"  >+</div> 
         </div>
@@ -63,7 +63,7 @@ export default {
           )
       }},
   methods: {
-         deletetodo(todo  ){
+         deletetodo(todo){
              this.$store.dispatch('removeTodo', todo.id)
 
          },
