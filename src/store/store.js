@@ -13,9 +13,7 @@ export default new Vuex.Store({
    now_day: 0
  },
  mutations: {
-   GET_TODO(state, todo){
-     state.newTodo = todo
-   },
+    
    ADD_TODO(state, todo){
      state.todos.push({
        date: todo.date,
@@ -25,22 +23,13 @@ export default new Vuex.Store({
        day:todo.day
      })
    },
-   EDIT_TODO(state, todo){
-      var todos = state.todos
-      todos.splice(todos.indexOf(todo), 1)
-      state.todos = todos
-      state.newTodo = todo.body
-   },
+   
    REMOVE_TODO(state, id){
       const imdex = state.todos.findIndex(item=> item.id===id)
       state.todos.splice(imdex,1)
     },
-   COMPLETE_TODO(state, todo){
-     todo.completed = !todo.completed
-   },
-   CLEAR_TODO(state){
-     state.newTodo = ''
-   },
+ 
+   
    SET_NOWW_DAY(state, day){
      state.now_day = day
    },
@@ -110,9 +99,7 @@ export default new Vuex.Store({
       })
    },
  
-   clearTodo({commit}){
-     commit('CLEAR_TODO')
-   },
+  
 
    },
    getters: {
