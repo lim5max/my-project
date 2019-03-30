@@ -73,10 +73,12 @@ export default {
               let  date = new Date()
               date.setFullYear(2019)
               date.setHours(this.selectedh)
-              date.setMonth(this.$store.state.nowmonth)
+              date.setMonth(this.$store.state.nowmonth, 1)
+              console.log(this.$store.state.nowmonth)
+              console.log(date)
               date.setMinutes(this.selectedm)
-               date.setDate(this.$store.state.now_day)
-                console.log(date)
+              date.setDate(this.$store.state.now_day)
+              
               let todo = {
                     date: date,
                     title: this.newTodo,
@@ -95,7 +97,7 @@ export default {
     },
     created : function(){
         this.$store.dispatch('gettodosfromfire')
-
+        
         this.nowday=this.$store.state.now_day
         this.nowmonth=this.$store.state.nowmonth
         for(var i=0; i!=24 ; i++){
