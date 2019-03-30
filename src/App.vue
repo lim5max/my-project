@@ -22,9 +22,10 @@ import Calen from './components/Calen'
 export default {
   name: 'App',
   components: {
-    Calen,
+    
     HelloWorld,
     TodoList,
+    Calen,
   }
 }
 </script>
