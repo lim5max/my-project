@@ -146,7 +146,7 @@
                         }
                         console.log(b)
                         this.go = this.drawdate(dataDate, a)
-                        this.$nextTick(function () {
+                        
                         
                         var go = this.go
                         console.log(go)
@@ -161,6 +161,7 @@
                                     text: "",
                                     active_is: false,
                                     active: false,
+                                    have_day:false
                                    
                               })
                               numbers_day++
@@ -179,11 +180,21 @@
                                       break;
                                }
                          }
-                        console.log(this.$store.getters.find(1,0) )  
  
                         console.log(this.days_li)
+                        
+                        this.$store.dispatch('set_days_li', this.days_li)
                         this.$store.dispatch('setNowM', this.now_month_index)
-                        })
+                                this.$store.dispatch('gettodosfromfire').then(()=>{
+                                            this.$store.state.days_li.forEach(day => {
+                                                if(this.$store.getters.finda(day.name , this.now_month_index)){
+                                                      day.have_day= true
+                              }
+                        });
+                                })
+                            
+                        this.days_li= this.$store.state.days_li
+                         
                          return 
                   },
                   nons: function(){
@@ -192,13 +203,14 @@
                         return
                   },
                   plusmonths  : function(){
-
+                              
                           if (this.now_month_index != 11){ 
                           this.now_month_index++ }else{
 
                           this.now_month_index = 0
                             }  
-                            this.drawcalen()
+                         this.drawcalen()
+                         
                   },
                   minusmonths: function(){
 
