@@ -7,7 +7,7 @@ export default new Vuex.Store({
  state: {
    todos: [],
    newTodo: 0,
-   days_li:[],
+ 
    days_li:[],
    nowmonth:0,
    day:1,
@@ -24,7 +24,9 @@ export default new Vuex.Store({
        day:todo.day
      })
    },
- 
+   SET_DAYS_LI(state, days_li){
+     state.days_li=days_li
+   },
    REMOVE_TODO(state, id){
       const imdex = state.todos.findIndex(item=> item.id===id)
       state.todos.splice(imdex,1)
@@ -36,11 +38,12 @@ export default new Vuex.Store({
    SET_NOWW_DAY(state, day){
      state.now_day = day
    },
-   SET_NOW_M(state, day){
-    state.nowmonth = day
+   SET_NOW_M(state, month){
+    state.nowmonth = month
   },
   gettodosfromfire(state, todos){
     state.todos = todos
+    console.log(todos)
   }
   },
  actions: {
@@ -73,17 +76,21 @@ export default new Vuex.Store({
    setNowDay({commit}, index_day){
     commit("SET_NOWW_DAY", index_day)
   },
-  setNowM({commit}, index_day){
-    commit("SET_NOW_M", index_day)
+  setNowM({commit}, index_month){
+    commit("SET_NOW_M", index_month)
   },
    addTodo({commit}, todo){
-
+    return new Promise((resolve, reject) => {
+    console.log(todo.date.getMonth())
     db.collection('todos').add({
         title:todo.title,
         date: todo.date,
         day: todo.date.getDate(),
         month: todo.date.getMonth()
-      })
+      } , error => {
+        // http failed, let the calling function know that action did not work out
+        reject(error);
+       })
       .then(docRef => {
         console.log(docRef.id)
         commit('ADD_TODO' , {
@@ -94,8 +101,8 @@ export default new Vuex.Store({
           date: todo.date
       })
       })
-     
-  
+     resolve()
+    } 
    },
    
    removeTodo({commit}, id){
@@ -103,10 +110,12 @@ export default new Vuex.Store({
       .then(()=>{ 
         commit('REMOVE_TODO', id)
 
-      })
+      }) 
    },
  
- 
+  set_days_li({commit}, days_li){
+    commit("SET_DAYS_LI", days_li)
+  }
 
    },
    getters: {
@@ -114,7 +123,7 @@ export default new Vuex.Store({
     getTodo: state =>{
       return state.todos.filter(todo => todo.day === state.now_day && todo.month === state.nowmonth);
     },
-    findd: state=> (day, month)=>{
+    finda: state=> (day, month)=>{
       return state.todos.find(
         todo =>{
            return todo.day === day && todo.month === month
