@@ -7,7 +7,7 @@ export default new Vuex.Store({
  state: {
    todos: [],
    newTodo: 0,
- 
+   ready_from_firebase: 0, 
    days_li:[],
    nowmonth:0,
    day:1,
@@ -43,13 +43,16 @@ export default new Vuex.Store({
   },
   gettodosfromfire(state, todos){
     state.todos = todos
+    state.ready_from_firebase=1
     console.log(todos)
   }
   },
  actions: {
-  gettodosfromfire( {commit} ){
-    console.log(2)
+    gettodosfromfire( {commit} ){
+   
+    
     db.collection('todos').get()
+    
     .then(querySnapshot=>{
       let mass = []
       querySnapshot.forEach(doc=>{
@@ -66,9 +69,13 @@ export default new Vuex.Store({
         }
         mass.push(data)
       })
+      
       commit('gettodosfromfire', mass)
+      
     })
     
+  
+ 
   },
   Days_li({commit}, days){
     commit("Days_li", days)
@@ -80,16 +87,14 @@ export default new Vuex.Store({
     commit("SET_NOW_M", index_month)
   },
    addTodo({commit}, todo){
-    return new Promise((resolve, reject) => {
+    
     console.log(todo.date.getMonth())
     db.collection('todos').add({
         title:todo.title,
         date: todo.date,
         day: todo.date.getDate(),
         month: todo.date.getMonth()
-      } , error => {
-        // http failed, let the calling function know that action did not work out
-        reject(error);
+      
        })
       .then(docRef => {
         console.log(docRef.id)
@@ -101,8 +106,7 @@ export default new Vuex.Store({
           date: todo.date
       })
       })
-     resolve()
-    } 
+    
    },
    
    removeTodo({commit}, id){
@@ -129,7 +133,8 @@ export default new Vuex.Store({
            return todo.day === day && todo.month === month
         }
       )
-    }
+    },
+    status: state => state.ready_from_firebase 
   }
  
 })
