@@ -32,7 +32,7 @@
 
 <script>
  
- 
+ import { mapState } from 'vuex';
       export default {
             name: 'ca',
             data () {
@@ -55,6 +55,7 @@
                              console.log(7666)
                        }
                   }
+                   mapState(['ready_from_firebase'])
                   },
                     print_month: function(){
                             return this.months[this.now_month_index]
@@ -63,12 +64,15 @@
             methods: {
                   classday(day){
                         let trueday = false
+                        let have_day_boolen=false
                         if (this.active_now_day == day.name) {
                               trueday = true; }
-
+                        if (day.have_day){
+                              have_day_boolen=true
+                        }
                         return {
                               dai: !trueday,
-
+                              having_day: have_day_boolen,
                               active_day: trueday
                         } 
                   },
@@ -91,6 +95,7 @@
                   },
                  
                   drawdate: function (nm, a){
+                        this.$store.state.ready_from_firebase=0
                         var i = 1
                         var bb = []
                          
@@ -185,16 +190,10 @@
                         
                         this.$store.dispatch('set_days_li', this.days_li)
                         this.$store.dispatch('setNowM', this.now_month_index)
-                                this.$store.dispatch('gettodosfromfire').then(()=>{
-                                            this.$store.state.days_li.forEach(day => {
-                                                if(this.$store.getters.finda(day.name , this.now_month_index)){
-                                                      day.have_day= true
-                              }
-                        });
-                                })
-                            
-                        this.days_li= this.$store.state.days_li
-                         
+                        this.$store.dispatch('gettodosfromfire') 
+                      
+                                   
+                             
                          return 
                   },
                   nons: function(){
@@ -202,6 +201,7 @@
                        console.log(this.days_li)
                         return
                   },
+              
                   plusmonths  : function(){
                               
                           if (this.now_month_index != 11){ 
@@ -210,7 +210,7 @@
                           this.now_month_index = 0
                             }  
                          this.drawcalen()
-                         
+                         this.watch_vuex()
                   },
                   minusmonths: function(){
 
@@ -221,16 +221,32 @@
                         }
                         
                         this.drawcalen()
-
+                        this.watch_vuex()
                         },
-                  
+                  watch_vuex(){
+                        this.$store.watch(
+                        (state, getters) => getters.status,
+                        (newValue, oldValue) => {
+                        console.log(`Updating from ${oldValue} to ${newValue}`);
+                         this.days_li.forEach(day => {
+                                                if(this.$store.getters.finda(day.name , this.now_month_index)){
+                                                      day.have_day= true
+                              }
+                                                      })
+                        },
+                  )
+                  return
+                  }
             },
             created: function(){
                   this.drawcalen()
-                 
+                  this.watch_vuex()
+                   
                    
                   
-            }
+            },
+              updated() {
+              }
            
   }
       
@@ -275,6 +291,10 @@ h1{
 .fq{
     grid-column: 1;
 
+}
+.having_day{
+      opacity: 0.5;
+      border: 1px solid black;
 }
 .fr{
     grid-column: 7;
