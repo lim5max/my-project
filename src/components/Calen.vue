@@ -55,7 +55,7 @@
                              console.log(7666)
                        }
                   }
-                   mapState(['ready_from_firebase'])
+                   
                   },
                     print_month: function(){
                             return this.months[this.now_month_index]
@@ -210,7 +210,7 @@
                           this.now_month_index = 0
                             }  
                          this.drawcalen()
-                         this.watch_vuex()
+                         this.watchVuex()
                   },
                   minusmonths: function(){
 
@@ -221,9 +221,9 @@
                         }
                         
                         this.drawcalen()
-                        this.watch_vuex()
+                        this.watchVuex()
                         },
-                  watch_vuex(){
+                  watchVuex(){
                         this.$store.watch(
                         (state, getters) => getters.status,
                         (newValue, oldValue) => {
@@ -240,7 +240,7 @@
             },
             created: function(){
                   this.drawcalen()
-                  this.watch_vuex()
+                  this.watchVuex()
                    
                    
                   
