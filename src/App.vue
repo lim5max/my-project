@@ -3,6 +3,7 @@
     <div class="img_con"> 
        <center><h1>2019</h1></center>
   <img src="./assets/lo.png" class="logo">
+  <h1>Made by Max still</h1>
 </div>
 
     <div  class="bid" >
@@ -15,7 +16,7 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld'
+
 import TodoList from './components/TodoList'
 import Calen from './components/Calen'
 
@@ -23,7 +24,7 @@ export default {
   name: 'App',
   components: {
     
-    HelloWorld,
+
     TodoList,
     Calen,
   }
