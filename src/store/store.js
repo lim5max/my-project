@@ -32,9 +32,7 @@ export default new Vuex.Store({
       state.todos.splice(imdex,1)
     },
  
-   Days_li(state, days){
-     state.days_li = days
-   },
+  
    SET_NOWW_DAY(state, day){
      state.now_day = day
    },
@@ -77,9 +75,7 @@ export default new Vuex.Store({
   
  
   },
-  Days_li({commit}, days){
-    commit("Days_li", days)
-  },
+
    setNowDay({commit}, index_day){
     commit("SET_NOWW_DAY", index_day)
   },
@@ -116,10 +112,7 @@ export default new Vuex.Store({
 
       }) 
    },
- 
-  set_days_li({commit}, days_li){
-    commit("SET_DAYS_LI", days_li)
-  }
+
 
    },
    getters: {
