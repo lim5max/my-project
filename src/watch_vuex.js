@@ -3,7 +3,8 @@ export function watchVuex(){
     (state, getters) => getters.status,
     (newValue, oldValue) => {
     console.log(`Updating from ${oldValue} to ${newValue}`);
-     this.$store.days_li.forEach(day => {
+    console.log(this.$store.state.daysLi)
+     this.$store.state.daysLi.forEach(day => {
                             if(this.$store.getters.finda(day.name , this.now_month_index)){
                                   day.have_day= true
           }
