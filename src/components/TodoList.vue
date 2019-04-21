@@ -20,7 +20,7 @@
   </option>
  
 </select>
-{{selectedh}}
+
 <button  @click="addTodo">
     add todo</button>
     <div class="todos">
@@ -33,6 +33,7 @@
     </div>
 </template>
 <script>
+import {watchVuex} from'../watch_vuex'
 export default {
   name: 'todo-list',
 
@@ -67,6 +68,7 @@ export default {
              this.$store.dispatch('removeTodo', todo.id)
 
          },
+         watchVuex,
          addTodo(){
              
              if(this.newTodo.trim()  != '' && this.selectedm!= -1 &&this.selectedh!=-1){
@@ -88,14 +90,17 @@ export default {
                this.newTodo = ''
              this.id++
              this.$store.dispatch('addTodo' , todo)
+             this.watchVuex()
                  
              }
         
             this.newTodo=""
             this.idForTodo++
-        }
+        },
+        
     },
     created : function(){
+        this.watchVuex()
         this.$store.dispatch('gettodosfromfire')
         
         this.nowday=this.$store.state.now_day
