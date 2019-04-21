@@ -63,6 +63,7 @@
                      }
             },
             methods: {
+                  watchVuex,
                   classday(day){
                         let trueday = false
                         let have_day_boolen=false
@@ -189,7 +190,7 @@
  
                         console.log(this.days_li)
                         
-                        this.$store.dispatch('set_days_li', this.days_li)
+                        this.$store.dispatch('addDaysLi', this.days_li)
                         this.$store.dispatch('setNowM', this.now_month_index)
                         this.$store.dispatch('gettodosfromfire') 
                       
@@ -211,6 +212,7 @@
                           this.now_month_index = 0
                             }  
                          this.drawcalen()
+                         this.$store.dispatch('addDaysLi',this.days_li)
                         this.watchVuex()
                   },
                   minusmonths: function(){
@@ -222,13 +224,15 @@
                         }
                         
                         this.drawcalen()
+                        this.$store.dispatch('addDaysLi',this.days_li)
                         this.watchVuex()
                         },
-                        watchVuex,
+                        
                   
             },
             created: function(){
                   this.drawcalen()
+                  
                   this.watchVuex()
                    
                    
