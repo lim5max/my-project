@@ -33,6 +33,7 @@
 <script>
  
  import { mapState } from 'vuex';
+ import {watchVuex} from'../watch_vuex'
       export default {
             name: 'ca',
             data () {
@@ -210,7 +211,7 @@
                           this.now_month_index = 0
                             }  
                          this.drawcalen()
-                         this.watchVuex()
+                        this.watchVuex()
                   },
                   minusmonths: function(){
 
@@ -223,20 +224,8 @@
                         this.drawcalen()
                         this.watchVuex()
                         },
-                  watchVuex(){
-                        this.$store.watch(
-                        (state, getters) => getters.status,
-                        (newValue, oldValue) => {
-                        console.log(`Updating from ${oldValue} to ${newValue}`);
-                         this.days_li.forEach(day => {
-                                                if(this.$store.getters.finda(day.name , this.now_month_index)){
-                                                      day.have_day= true
-                              }
-                                                      })
-                        },
-                  )
-                  return
-                  }
+                        watchVuex,
+                  
             },
             created: function(){
                   this.drawcalen()
