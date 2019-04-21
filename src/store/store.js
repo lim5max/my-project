@@ -6,9 +6,10 @@ Vue.use(Vuex)
 export default new Vuex.Store({
  state: {
    todos: [],
+   daysLi:[],
    newTodo: 0,
    ready_from_firebase: 0, 
-   days_li:[],
+ 
    nowmonth:0,
    day:1,
    now_day: 0
@@ -32,7 +33,9 @@ export default new Vuex.Store({
       state.todos.splice(imdex,1)
     },
  
-  
+    SET_DAYSLI(state,daysLi){
+      state.daysLi=daysLi
+    },
    SET_NOWW_DAY(state, day){
      state.now_day = day
    },
@@ -111,6 +114,9 @@ export default new Vuex.Store({
         commit('REMOVE_TODO', id)
 
       }) 
+   },
+   addDaysLi({commit},daysLi){
+     commit('SET_DAYSLI',daysLi)
    },
 
 
